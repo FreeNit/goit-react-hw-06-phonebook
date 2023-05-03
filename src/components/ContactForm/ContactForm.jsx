@@ -8,7 +8,7 @@ import {
   FormInput,
   AddContactBtn,
 } from './ContactForm.styled';
-import { addContact } from 'redux/actions';
+import { addContact } from 'redux/contactsSlice';
 
 const checkUserAvailability = (contacts, userName) => {
   return contacts.find(contact => contact.name === userName);

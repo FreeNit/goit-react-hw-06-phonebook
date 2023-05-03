@@ -1,6 +1,6 @@
 import { FilterWrapper, SubHeader, FilterInput } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { setNewFilterValue } from 'redux/actions';
+import { setNewFilterValue } from 'redux/filterSlice';
 import { getFilter } from 'redux/selectors';
 
 export const Filter = () => {
@@ -9,7 +9,6 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const handleFilter = evt => {
-    console.log(evt.target.value);
     dispatch(setNewFilterValue(evt.target.value));
   };
 

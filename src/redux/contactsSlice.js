@@ -4,16 +4,16 @@ import { nanoid } from 'nanoid';
 const localContacts = localStorage.getItem('contacts');
 
 // -> Add contact to Local Storage
-const updateAddToLocalStorage = contact => {
-  const localContacts = JSON.parse(localStorage.getItem('contacts'));
-  if (localContacts) {
-    const newContacts = [...localContacts, contact];
-    localStorage.setItem('contacts', JSON.stringify(newContacts));
-  } else {
-    const newContacts = [contact];
-    localStorage.setItem('contacts', JSON.stringify(newContacts));
-  }
-};
+// const updateAddToLocalStorage = contact => {
+//   const localContacts = JSON.parse(localStorage.getItem('contacts'));
+//   if (localContacts) {
+//     const newContacts = [...localContacts, contact];
+//     localStorage.setItem('contacts', JSON.stringify(newContacts));
+//   } else {
+//     const newContacts = [contact];
+//     localStorage.setItem('contacts', JSON.stringify(newContacts));
+//   }
+// };
 
 const contactsInitialState = {
   contacts: localContacts ? JSON.parse(localContacts) : [],
@@ -25,7 +25,7 @@ const contactsSlice = createSlice({
   reducers: {
     addContact: {
       reducer(state, action) {
-        updateAddToLocalStorage(action.payload);
+        // updateAddToLocalStorage(action.payload);
         return {
           ...state,
           contacts: [...state.contacts, action.payload],
