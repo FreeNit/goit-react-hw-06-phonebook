@@ -7,8 +7,10 @@
 // export const store = createStore(rootReducer, enhancer);
 
 import { configureStore } from '@reduxjs/toolkit';
+import { contactsReducer } from './contactsSlice';
+import { filterReducer } from './filterSlice';
 // import { rootReducer } from './reducer';
-import { contactsReducer, filterReducer } from './reducer';
+// import { contactsReducer, filterReducer } from './reducer';
 
 export const store = configureStore({
   reducer: {
