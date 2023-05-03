@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import { setNewFilterValue, addContact, removeContact } from './actions';
 
 const localContacts = localStorage.getItem('contacts');
 
@@ -18,47 +20,75 @@ const updateAddToLocalStorage = contact => {
   }
 };
 
-export const contactsReducer = (state = contactsInitialState, action) => {
-  switch (action.type) {
-    case 'contacts/addContact':
-      updateAddToLocalStorage(action.payload);
-      return {
-        ...state,
-        contacts: [...state.contacts, action.payload],
-      };
+export const contactsReducer = createReducer(contactsInitialState, {
+  [addContact]: (state, action) => {
+    updateAddToLocalStorage(action.payload);
+    return {
+      ...state,
+      contacts: [...state.contacts, action.payload],
+    };
+  },
 
-    case 'contacts/removeContact':
-      const contactsWithDeletedItem = state.contacts.filter(
-        task => task.id !== action.payload.id
-      );
+  [removeContact]: (state, action) => {
+    const contactsWithDeletedItem = state.contacts.filter(
+      task => task.id !== action.payload.id
+    );
+    localStorage.removeItem('contacts');
+    localStorage.setItem('contacts', JSON.stringify(contactsWithDeletedItem));
+    return {
+      ...state,
+      contacts: contactsWithDeletedItem,
+    };
+  },
+});
 
-      localStorage.removeItem('contacts');
-      localStorage.setItem('contacts', JSON.stringify(contactsWithDeletedItem));
+// export const contactsReducer = (state = contactsInitialState, action) => {
+//   switch (action.type) {
+//     case 'contacts/addContact':
+//       updateAddToLocalStorage(action.payload);
+//       return {
+//         ...state,
+//         contacts: [...state.contacts, action.payload],
+//       };
 
-      return {
-        ...state,
-        contacts: contactsWithDeletedItem,
-      };
+//     case 'contacts/removeContact':
+//       const contactsWithDeletedItem = state.contacts.filter(
+//         task => task.id !== action.payload.id
+//       );
 
-    default:
-      return state;
-  }
-};
+//       localStorage.removeItem('contacts');
+//       localStorage.setItem('contacts', JSON.stringify(contactsWithDeletedItem));
+
+//       return {
+//         ...state,
+//         contacts: contactsWithDeletedItem,
+//       };
+
+//     default:
+//       return state;
+//   }
+// };
 
 const filterInitialState = { filter: '' };
 
-export const filterReducer = (state = filterInitialState, action) => {
-  switch (action.type) {
-    case 'filter/newFilter':
-      return {
-        ...state,
-        filter: action.payload.filter,
-      };
+// export const filterReducer = (state = filterInitialState, action) => {
+//   switch (action.type) {
+//     case 'filter/newFilter':
+//       return {
+//         ...state,
+//         filter: action.payload.filter,
+//       };
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
+
+export const filterReducer = createReducer(filterInitialState, {
+  [setNewFilterValue]: (state, action) => {
+    return { ...state, filter: action.payload.filter };
+  },
+});
 
 // -> Require for Persist
 // export const rootReducer = combineReducers({
